@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&family=Tiny5&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <div id="auth-buttons">
+            <% if (!session.userId) { %>
+                <button onclick="showLoginForm()">Login</button>
+                <button onclick="showSignupForm()">Signup</button>
+            <% } else { %>
+                <button onclick="logout()" id="logout_btn">Logout</button>
+            <% } %>
+        </div>
+    </div>
+    <div class="nav">
+        <button onclick="to_todo()">ToDo</button>
+        <button onclick="to_self()">Self</button>
+    </div>
+    <div class="ToDo_wrap" id="ToDo_wrap">
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <button id="prevBtn">이전</button>
+                <h2 id="currentMonth"></h2>
+                <button id="nextBtn">다음</button>
+            </div>
+            <div class="calendar-days">
+                <div class="day">일</div>
+                <div class="day">월</div>
+                <div class="day">화</div>
+                <div class="day">수</div>
+                <div class="day">목</div>
+                <div class="day">금</div>
+                <div class="day">토</div>
+            </div>
+            <div class="calendar-dates" id="calendarDates"></div>
+        </div>
+        <div id="todo">
+            <div class="search-todo">
+                <div id="todo-head">TODO LIST</div>
+                <div id="todo-date"></div>
+                <form id="search-form" class="mb-4 mt-4">
+                    <div class="form-group">
+                        <label for="search-date"></label>
+                        <input type="date" class="form-control" id="search-date" name="date" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="search-submit">Search</button>
+                </form>
+
+                <div id="search-results" class="mt-4">
+                </div>
+            </div>
+            <div id="addTodo_icon" onclick="display_Add()"><span>+</span></div>
+            <div class="container mt-5 addTodo" id="addTodo">
+                <form action="/add" method="POST" class="add_form">
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" class="form-control" id="add-date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tasks">Tasks</label>
+                        <input type="text" class="form-control" id="tasks" name="tasks" required>
+                    </div>
+                    <button type="submit" id="form_submit_btn">Add Todo</button>
+                </form>
+                <div id="closeTodo_icon" onclick="display_Add()"><span>X</span></div>
+            </div>  
+        </div>  
+        <script src="js/script.js"></script>  
+    </div>  
+
+    <div class="Self_wrap" id="Self_wrap">
+        <div class="self-head"></div>
+        <div class="self-content" id="selfContent">
+            
+        </div>
+    </div>
+    
+</body>
+</html>

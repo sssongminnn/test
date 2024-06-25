@@ -1,0 +1,338 @@
+body{
+    font-family: "Hi Melody";
+    text-align: center;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.header{
+    height: 300px;
+    width: 1100px;
+    color: black;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    font-size: 20px;
+}
+#logout_btn{
+    font-family: "Hi Melody";
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.signup-form-container {
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-form .form-group {
+    margin-bottom: 15px;
+}
+
+.signup-form button {
+    padding: 10px;
+    margin-top: 10px;
+}
+.nav{
+    height: 50px;
+    width: 1080px;
+    /* background-color: coral; */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-left: 20px;
+}
+.nav > button {
+    height: 45px;
+    width: 100px;
+    background-color: white;
+    border: 3px solid black;
+    border-bottom: none;
+    border-radius: 10%;
+    margin-left: 5px;
+
+    font-family: "Hi Melody";
+    text-align: center;
+    font-size: 30px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+.ToDo_wrap{
+    width: 1100px;
+    height: 700px;
+    border: 3px solid black;
+    border-radius: 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.calendar-container {
+    width: 300px;
+    height: 600px;
+    margin: 30px auto;
+    margin: 30px 20px 30px 80px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    background-color: #fdefde;
+
+    /* display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center; */
+}
+  
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+#prevBtn{
+    font-family: "Hi Melody";
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid black;
+    border-radius: 5px;
+}
+#nextBtn{
+    font-family: "Hi Melody";
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    /* 
+    grid-template-columns : CSS의 Grid 레이아웃에서 사용되는 속성(property) 중 하나로, 
+    그리드 컨테이너(grid container)의 열(column) 크기를 지정하는 것을 말한다.
+    repeat(7, 1fr) : 1행에 7개의 열이 있으며, 
+    각 열의 크기를 동일하게 1분의 1(fractional unit, fr)로 설정하라는 의미한다. */
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+}
+  /* grid-template-columns 속성을 사용하여 그리드 컨테이너의 열 크기를 유연하게 조정할 수 있으며, 
+  반응형 웹 디자인에서 유용하게 활용된다. 
+  이렇게 함으로써 웹페이지의 레이아웃을 다양한 화면 크기와 장치에 맞추는데 도움이 된다. */
+  
+.day {
+    padding: 5px;
+}
+  
+.calendar-dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 5px;
+}
+.dateSpan{
+    height: 10px;
+    width: 10px;
+    background-color: black;
+}
+.date {
+    cursor: pointer;
+    padding: 5px;
+}
+  
+.date:hover {
+    background-color: #f5f5f5;
+}
+#todo {
+    width: 300px;
+    height: 600px;
+    margin: 30px 80px 30px 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    background-color: #fdefde;
+    display: flex;
+    justify-content: space-between ;
+    align-items: center;
+    flex-direction: column;
+}
+#todo-head{
+    font-size: 50px;
+}#todo-date{
+    display: none;
+}
+.search-todo{
+    height: 50%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+}
+#search-form{
+    display: none;
+    /* width: 300px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row; */
+}
+#search-date{
+    width: 190px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0);
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 3px solid black;
+
+    font-family: "Hi Melody";
+    font-size: 20px;
+}
+#search-submit{
+    width: 60px;
+    height: 50px;
+    background-color: gray;
+    border: 0px;
+    border-radius: 10px;
+    margin-left: 10px;
+    font-family: "Hi Melody";
+    font-size: 20px;
+}
+#search-results{
+    font-family: "Hi Melody";
+    font-size: 20px;
+}
+input[type='checkbox'] {
+    display: none;
+}
+label{
+    font-size: 25px;
+}
+input[type='checkbox'] + label:before{
+    cursor: pointer;
+    content:"";
+    display:inline-block;
+    width:17px;
+    height:17px;
+    border:2px solid #F47C7C;
+    border-radius: 4px;
+    vertical-align:middle;
+}
+  /* label:before에 체크 된 상태 CSS */  
+input[type='checkbox']:checked + label::before{
+    content:'✔';
+    font-size: 15px;
+    background-color:#F47C7C;
+    border-color:#F47C7C;
+    /* background-image: url('/img/check_icon.png'); */
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+input[type="checkbox"]:checked+label {
+    text-decoration: line-through;
+    color: black;
+  }
+.addTodo{
+    display: none;
+    width: 300px;
+    height: 50%;
+    border-top: 1px dotted gray;
+
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.add_form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Hi Melody";
+    text-align: center;
+}
+.form-group{
+    width: 300px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.form-group input{
+    width: 150px;
+    font-family: "Hi Melody";
+    font-size: 17px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+#form_submit_btn{
+    width: 80px;
+    font-family: "Hi Melody";
+    text-align: center;
+    font-size: 17px;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid black;
+    border-radius: 5px;
+}
+#addTodo_icon{
+    display: block;
+    height: 50%;
+    font-size: 30px;
+    cursor: pointer;
+}
+#closeTodo_icon{
+    display: none;
+    font-size: 30px;
+    cursor: pointer;
+}
+.Self_wrap{
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    width: 1100px;
+    height: 700px;
+    border: 3px solid black;
+    border-radius: 3%;
+}
+.self-head{
+    width: 1000px;
+    display: flex;
+    justify-content: right;
+    align-items: flex-end;
+    height: 8%;
+}
+.self-head > button{
+    width: 80px;
+    font-family: "Hi Melody";
+    text-align: center;
+    font-size: 20px;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+.selfForm{
+    display: none;
+
+}
+.self-content{
+    height: 92%;
+    width: 1000px;
+}
