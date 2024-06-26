@@ -19,8 +19,8 @@
         </div>
     </div>
     <div class="nav">
-        <button onclick="to_todo()">ToDo</button>
-        <button onclick="to_self()">Self</button>
+        <button onclick="to_todo()" id="ToDo_btn">ToDo</button>
+        <button onclick="to_self()" id="Self_btn">Self</button>
     </div>
     <div class="ToDo_wrap" id="ToDo_wrap">
         <div class="calendar-container">
@@ -75,11 +75,28 @@
     </div>  
 
     <div class="Self_wrap" id="Self_wrap">
-        <div class="self-head"></div>
-        <div class="self-content" id="selfContent">
-            
+        <div class="add_self_form">
+            <button onclick="toggleSelfForm()" id="form_btn">Write</button>
+            <form id="selfForm" action="/self/write" method="POST" class="active">
+                <div class="form-group">
+                    <input type="text" id="title" name="title" placeholder="Title" required>
+                </div>
+                <div class="form-group">
+                    <textarea id="content" name="content" rows="30" cols="30" placeholder="Content" required></textarea>
+                </div>
+                <button type="submit" id="self_sub_btn">Submit</button>
+            </form>
+        </div>
+        <div id="postContainer" class="post post_self">
+            <% selfPosts.forEach(post => { %>
+                <div class="post-item" id="post_<%= post.id %>">
+                    <h3><%= post.title %></h3>
+                    <p><%= post.content %></p>
+                    <button onclick="remove_write('<%= post.id %>')">&times;</button>
+                </div>
+            <% }) %>
         </div>
     </div>
-    
+    <div class="footer"></div>
 </body>
 </html>

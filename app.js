@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
-const { Todo, User} = require('./models');
+const { Todo, User, Self } = require('./models');
 
 const app = express();
 const port = 3000;
@@ -34,7 +34,13 @@ app.get('/', isAuthenticated, async (req, res) => {
         where: { userId: req.session.userId },
         order: [['date', 'ASC']] 
     });
-    res.render('index', { todos, session: req.session });
+
+    const selfPosts = await Self.findAll({
+        where: { userId: req.session.userId },
+        order: [['createdAt', 'DESC']]
+    });
+
+    res.render('index', { todos, selfPosts, session: req.session });
 });
 
 // 회원가입 페이지 라우팅
@@ -142,6 +148,25 @@ app.put('/todos/:id/toggle', isAuthenticated, async (req, res) => {
     }
 });
 
+// Self 게시물 삭제 라우팅
+app.post('/delete/:id', isAuthenticated, async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await Self.destroy({ where: { id, userId: req.session.userId } });
+        if (result) {
+            res.sendStatus(200); // 삭제 성공 시 HTTP 상태 코드 200 반환
+        } else {
+            res.status(404).json({ success: false, message: '게시물을 찾을 수 없습니다.' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: '서버 오류가 발생했습니다.' });
+    }
+});
+
+// Self 라우트 사용
+const selfRoutes = require('./routes/selfRoutes');
+app.use('/self', selfRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

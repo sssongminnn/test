@@ -7,8 +7,8 @@ const sequelize = new Sequelize({
 
 const Todo = require('./Todo')(sequelize);
 const User = require('./User')(sequelize);
-// const Self = require('./Self')(sequelize);
+const Self = require('./Self')(sequelize);
 
 sequelize.sync();
 
-module.exports = { sequelize, Todo, User};
+module.exports = { sequelize, Todo, User, Self };

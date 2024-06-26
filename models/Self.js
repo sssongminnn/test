@@ -6,19 +6,11 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        company: {
+        title: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        questionNumber: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        question: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        answer: {
+        content: {
             type: DataTypes.TEXT,
             allowNull: false
         }

@@ -1,3 +1,26 @@
+// nav function
+function to_todo(){
+  var todoWrap = document.getElementById('ToDo_wrap');
+  var selfWrap = document.getElementById('Self_wrap');
+  var btn = document.getElementById('ToDo_btn');
+  var btn2 = document.getElementById('Self_btn');
+
+  todoWrap.style.display = 'flex';
+  selfWrap.style.display = 'none';
+  btn.style.backgroundColor = 'antiquewhite'
+  btn2.style.backgroundColor = 'rgba(0,0,0,0)'
+}
+function to_self(){
+  var todoWrap = document.getElementById('ToDo_wrap');
+  var selfWrap = document.getElementById('Self_wrap');
+  var btn = document.getElementById('ToDo_btn');
+  var btn2 = document.getElementById('Self_btn');
+  
+  todoWrap.style.display = 'none';
+  selfWrap.style.display = 'flex';
+  btn.style.backgroundColor = 'rgba(0,0,0,0)'
+  btn2.style.backgroundColor = 'antiquewhite'
+}
 const calendarDates = document.getElementById("calendarDates");
 const currentMonthElement = document.getElementById("currentMonth");
 const prevBtn = document.getElementById("prevBtn");
@@ -137,21 +160,6 @@ function display_Add() {
     close_icon.style.display = 'none';
   }
 }
-
-function to_todo(){
-  var todoWrap = document.getElementById('ToDo_wrap');
-  var selfWrap = document.getElementById('Self_wrap');
-  
-  todoWrap.style.display = 'flex';
-  selfWrap.style.display = 'none';
-}
-function to_self(){
-  var todoWrap = document.getElementById('ToDo_wrap');
-  var selfWrap = document.getElementById('Self_wrap');
-  
-  todoWrap.style.display = 'none';
-  selfWrap.style.display = 'flex';
-}
 // 로그인 폼 보이기
 function showLoginForm() {
   document.getElementById('loginFormContainer').style.display = 'block';
@@ -241,4 +249,159 @@ function logout() {
           console.error('로그아웃 오류:', error);
           alert('로그아웃 중 오류가 발생했습니다.');
       });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  fetchSelfEntries();
+});
+
+async function submitSelfForm(event) {
+  event.preventDefault();
+
+  const title = document.getElementById('title').value;
+  const content = document.getElementById('content').value;
+
+  try {
+      const response = await fetch('/self/write', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ title, content })
+      });
+
+      if (!response.ok) {
+          throw new Error('Failed to submit form');
+      }
+
+      const responseData = await response.json();
+      displaySelfEntry(responseData);
+
+  } catch (error) {
+      console.error('Error submitting form:', error);
+  }
+}
+
+async function fetchSelfEntries() {
+  try {
+      const response = await fetch('/self/list');
+      const entries = await response.json();
+
+      entries.forEach(entry => displaySelfEntry(entry));
+  } catch (error) {
+      console.error('Error fetching entries:', error);
+  }
+}
+
+function displaySelfEntry(entry) {
+  const postContainer = document.getElementById('postContainer');
+  const newEntry = document.createElement('div');
+  newEntry.classList.add('self-entry');
+  newEntry.innerHTML = `
+      <h3>${entry.title}</h3>
+      <p>${entry.content}</p>
+  `;
+  postContainer.prepend(newEntry);
+}
+
+function toggleSelfForm() {
+  const form = document.getElementById('selfForm');
+  const btn  = document.getElementById('form_btn');
+  
+    btn.style.display = 'none';
+    form.style.display = 'block';
+  
+  
+  form.classList.toggle('active');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const selfForm = document.getElementById('selfForm');
+  
+  selfForm.addEventListener('submit', async (event) => {
+      event.preventDefault(); // 기본 form 제출 동작을 막습니다.
+      
+      const formData = new FormData(selfForm);
+      const data = {};
+      formData.forEach((value, key) => {
+          data[key] = value;
+      });
+
+      try {
+          const response = await fetch('/self/write', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+          });
+
+          if (!response.ok) {
+              throw new Error('Failed to submit form');
+          }
+
+          const result = await response.json();
+          
+          // 서버에서 받은 데이터로 새로운 게시글을 추가합니다.
+          const postContainer = document.getElementById('postContainer');
+          const newPost = document.createElement('div');
+          newPost.className = 'post-item';
+          newPost.id = `post_${result.id}`;
+          newPost.innerHTML = `
+              <h3>${result.title}</h3>
+              <p>${result.content}</p>
+              <button onclick="remove_write('${result.id}')">&times;</button>
+          `;
+          postContainer.prepend(newPost); // 새로운 게시글을 맨 위에 추가합니다.
+          
+          // 폼 초기화
+          selfForm.reset();
+
+      } catch (error) {
+          console.error('Error submitting form:', error);
+      }
+  });
+});
+
+// script.js
+
+// 게시글 제목 클릭 시 팝업 토글
+document.addEventListener('DOMContentLoaded', function() {
+  const postTitles = document.querySelectorAll('.post-title');
+
+  postTitles.forEach(title => {
+      title.addEventListener('click', function() {
+          const postId = this.getAttribute('data-post-id');
+          const postContent = document.getElementById(`post_${postId}`);
+
+          // 현재 display 상태 확인
+          const isHidden = postContent.style.display === 'none' || postContent.style.display === '';
+
+          // 팝업 열기/닫기
+          postContent.style.display = isHidden ? 'block' : 'none';
+      });
+  });
+});
+
+
+function remove_write(postId) {
+  if (confirm("글을 지우시겠습니까?")) {
+      fetch(`/delete/${postId}`, {
+          method: 'POST',
+      }).then(response => {
+          if (response.ok) {
+              console.log(`Post with ID ${postId} has been deleted`);
+              // UI에서 해당 게시물 제거 (예: DOM에서 제거)
+              const postElement = document.getElementById(`post_${postId}`);
+              if (postElement) {
+                  postElement.remove(); // DOM에서 제거
+              }
+              window.location.reload();
+          } else {
+              console.error('Failed to delete the post');
+          }
+      }).catch(error => {
+          console.error('Error deleting the post:', error);
+      });
+  }
 }
